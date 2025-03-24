@@ -1,15 +1,17 @@
-# Copyright (c) 2025 devgagan : https://github.com/devgaganin.  
-# Licensed under the GNU General Public License v3.0.  
+# Copyright (c) 2025 devgagan : https://github.com/devgaganin.
+# Licensed under the GNU General Public License v3.0.
 # See LICENSE file in the repository root for full license text.
 
 import asyncio
-from shared_client import start_client
+from shared_client import start_client, app
 import importlib
 import os
 import sys
 
 async def load_and_run_plugins():
     await start_client()
+    bot_username = (await app.get_me()).username
+    print(f"Deployment Connected to @{bot_username}")
     plugin_dir = "plugins"
     plugins = [f[:-3] for f in os.listdir(plugin_dir) if f.endswith(".py") and f != "__init__.py"]
 
