@@ -7,10 +7,10 @@ from dotenv import load_dotenv
 
 load_dotenv()
 
-# VPS --- FILL COOKIES 🍪 in """ ... """ 
+# VPS --- FILL COOKIES 🍪 in """ ... """
 
 INST_COOKIES = """
-# wtite up here insta cookies
+# write up here insta cookies
 """
 
 YTUB_COOKIES = """
@@ -21,14 +21,19 @@ API_ID = os.getenv("API_ID", "")
 API_HASH = os.getenv("API_HASH", "")
 BOT_TOKEN = os.getenv("BOT_TOKEN", "")
 MONGO_URI = os.getenv("MONGO_DB", "")
-OWNER_ID = list(map(int, os.getenv("OWNER_ID", "").split())) # list seperated via space
+OWNER_ID = list(map(int, os.getenv("OWNER_ID", "").split()))  # list separated via space
 DB_NAME = os.getenv("DB_NAME", "telegram_downloader")
-STRING = os.getenv("STRING", None) # optional
-LOG_GROUP = int(os.getenv("LOG_GROUP", "-1001234456")) # optional with -100
-FORCE_SUB = int(os.getenv("FORCE_SUB", "-10012345567")) # optional with -100
-MASTER_KEY = os.getenv("MASTER_KEY", "gK8HzLfT9QpViJcYeB5wRa3DmN7P2xUq") # for session encryption
-IV_KEY = os.getenv("IV_KEY", "s7Yx5CpVmE3F") # for decryption
+STRING = os.getenv("STRING", None)  # optional
+LOG_GROUP = int(os.getenv("LOG_GROUP", "-1001234456"))  # optional with -100
+FORCE_SUB = int(os.getenv("FORCE_SUB", "-10012345567"))  # optional with -100
+MASTER_KEY = os.getenv("MASTER_KEY", "gK8HzLfT9QpViJcYeB5wRa3DmN7P2xUq")  # for session encryption
+IV_KEY = os.getenv("IV_KEY", "s7Yx5CpVmE3F")  # for decryption
 YT_COOKIES = os.getenv("YT_COOKIES", YTUB_COOKIES)
 INSTA_COOKIES = os.getenv("INSTA_COOKIES", INST_COOKIES)
 FREEMIUM_LIMIT = int(os.getenv("FREEMIUM_LIMIT", "0"))
 PREMIUM_LIMIT = int(os.getenv("PREMIUM_LIMIT", "500"))
+
+# New environment variables from main.py
+WAKE_ME_UP = os.getenv("WAKE_ME_UP", "false").lower() == "true"
+WAKE_ME_UP_URL = os.getenv("WAKE_ME_UP_URL", "")
+PORT = int(os.environ.get("PORT", 5000)) # default to 5000 if not set
