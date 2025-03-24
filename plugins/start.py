@@ -11,25 +11,25 @@ from config import LOG_GROUP, OWNER_ID, FORCE_SUB
 async def subscribe(app, message):
     if FORCE_SUB:
         try:
-          user = await app.get_chat_member(FORCE_SUB, message.from_user.id)
-          if str(user.status) == "ChatMemberStatus.BANNED":
-              await message.reply_text("You are Banned. Contact -- Team SPY")
-              return 1
+            user = await app.get_chat_member(FORCE_SUB, message.from_user.id)
+            if str(user.status) == "ChatMemberStatus.BANNED":
+                await message.reply_text("You are Banned. Contact -- Team SPY")
+                return 1
         except UserNotParticipant:
             link = await app.export_chat_invite_link(FORCE_SUB)
             caption = f"Join our channel to use the bot"
-            await message.reply_photo(photo="https://graph.org/file/d44f024a08ded19452152.jpg",caption=caption, reply_markup=InlineKeyboardMarkup([[InlineKeyboardButton("Join Now...", url=f"{link}"]]))
+            await message.reply_photo(photo="https://graph.org/file/d44f024a08ded19452152.jpg", caption=caption, reply_markup=InlineKeyboardMarkup([[InlineKeyboardButton("Join Now...", url=f"{link}")]]))
             return 1
         except Exception as ggn:
             await message.reply_text(f"Something Went Wrong. Contact admins... with following message {ggn}")
             return 1 
-     
+
 @app.on_message(filters.command("set"))
 async def set(_, message):
     if message.from_user.id not in OWNER_ID:
         await message.reply("You are not authorized to use this command.")
         return
-     
+
     await app.set_bot_commands([
         BotCommand("start", "🚀 Start the bot"),
         BotCommand("batch", "🫠 Extract in bulk"),
@@ -50,12 +50,9 @@ async def set(_, message):
         BotCommand("cancel", "🚫 Cancel login/batch/settings process"),
         BotCommand("stop", "🚫 Cancel batch process")
     ])
- 
+
     await message.reply("✅ Commands configured successfully!")
- 
- 
- 
- 
+
 help_pages = [
     (
         "📝 **Bot Commands Overview (1/2)**:\n\n"
@@ -106,77 +103,67 @@ help_pages = [
         "**__Powered by Team SPY__**"
     )
 ]
- 
- 
+
 async def send_or_edit_help_page(_, message, page_number):
     if page_number < 0 or page_number >= len(help_pages):
         return
- 
-     
+
     prev_button = InlineKeyboardButton("◀️ Previous", callback_data=f"help_prev_{page_number}")
     next_button = InlineKeyboardButton("Next ▶️", callback_data=f"help_next_{page_number}")
- 
-     
+
     buttons = []
     if page_number > 0:
         buttons.append(prev_button)
     if page_number < len(help_pages) - 1:
         buttons.append(next_button)
- 
-     
+
     keyboard = InlineKeyboardMarkup([buttons])
- 
-     
+
     await message.delete()
- 
-     
+
     await message.reply(
         help_pages[page_number],
         reply_markup=keyboard
     )
- 
- 
+
 @app.on_message(filters.command("help"))
 async def help(client, message):
     join = await subscribe(client, message)
     if join == 1:
         return
-     
+
     await send_or_edit_help_page(client, message, 0)
- 
- 
+
 @app.on_callback_query(filters.regex(r"help_(prev|next)_(\d+)"))
 async def on_help_navigation(client, callback_query):
     action, page_number = callback_query.data.split("_")[1], int(callback_query.data.split("_")[2])
- 
+
     if action == "prev":
         page_number -= 1
     elif action == "next":
         page_number += 1
 
     await send_or_edit_help_page(client, callback_query.message, page_number)
-     
+
     await callback_query.answer()
 
- 
 @app.on_message(filters.command("terms") & filters.private)
 async def terms(client, message):
     terms_text = (
         "> 📜 **Terms and Conditions** 📜\n\n"
         "✨ We are not responsible for user deeds, and we do not promote copyrighted content. If any user engages in such activities, it is solely their responsibility.\n"
-        "✨ Upon purchase, we do not guarantee the uptime, downtime, or the validity of the plan. __Authorization and banning of users are at our discretion; we reserve the right to ban or authorize users at any time.__\n"
+        "✨ Upon purchase, we do not guarantee the uptime, downtime, or the validity of the plan. __Authorization and banning of users are at our discretion; we reserve the right to ban or authorize any user.__\n"
         "✨ Payment to us **__does not guarantee__** authorization for the /batch command. All decisions regarding authorization are made at our discretion and mood.\n"
     )
-     
+
     buttons = InlineKeyboardMarkup(
         [
             [InlineKeyboardButton("📋 See Plans", callback_data="see_plan")],
-            [InlineKeyboardButton("💬 Contact Now", url="https://t.me/kingofpatal")],
+            [InlineKeyboardButton("💬 Contact Now", url="https://t.me/Doldotby")],
         ]
     )
     await message.reply_text(terms_text, reply_markup=buttons)
- 
- 
+
 @app.on_message(filters.command("plan") & filters.private)
 async def plan(client, message):
     plan_text = (
@@ -186,16 +173,15 @@ async def plan(client, message):
         "   - Users are advised to wait for the process to automatically cancel before proceeding with any downloads or uploads.\n\n"
         "📜 **Terms and Conditions**: For further details and complete terms and conditions, please send /terms.\n"
     )
-     
+
     buttons = InlineKeyboardMarkup(
         [
             [InlineKeyboardButton("📜 See Terms", callback_data="see_terms")],
-            [InlineKeyboardButton("💬 Contact Now", url="https://t.me/kingofpatal")],
+            [InlineKeyboardButton("💬 Contact Now", url="https://t.me/Doldotby")],
         ]
     )
     await message.reply_text(plan_text, reply_markup=buttons)
- 
- 
+
 @app.on_callback_query(filters.regex("see_plan"))
 async def see_plan(client, callback_query):
     plan_text = (
@@ -205,31 +191,28 @@ async def see_plan(client, callback_query):
         "   - Users are advised to wait for the process to automatically cancel before proceeding with any downloads or uploads.\n\n"
         "📜 **Terms and Conditions**: For further details and complete terms and conditions, please send /terms or click See Terms👇\n"
     )
-     
+
     buttons = InlineKeyboardMarkup(
         [
             [InlineKeyboardButton("📜 See Terms", callback_data="see_terms")],
-            [InlineKeyboardButton("💬 Contact Now", url="https://t.me/kingofpatal")],
+            [InlineKeyboardButton("💬 Contact Now", url="https://t.me/Doldotby")],
         ]
     )
     await callback_query.message.edit_text(plan_text, reply_markup=buttons)
- 
- 
+
 @app.on_callback_query(filters.regex("see_terms"))
 async def see_terms(client, callback_query):
     terms_text = (
         "> 📜 **Terms and Conditions** 📜\n\n"
         "✨ We are not responsible for user deeds, and we do not promote copyrighted content. If any user engages in such activities, it is solely their responsibility.\n"
-        "✨ Upon purchase, we do not guarantee the uptime, downtime, or the validity of the plan. __Authorization and banning of users are at our discretion; we reserve the right to ban or authorize users at any time.__\n"
+        "✨ Upon purchase, we do not guarantee the uptime, downtime, or the validity of the plan. __Authorization and banning of users are at our discretion; we reserve the right to ban or authorize any user.__\n"
         "✨ Payment to us **__does not guarantee__** authorization for the /batch command. All decisions regarding authorization are made at our discretion and mood.\n"
     )
-     
+
     buttons = InlineKeyboardMarkup(
         [
             [InlineKeyboardButton("📋 See Plans", callback_data="see_plan")],
-            [InlineKeyboardButton("💬 Contact Now", url="https://t.me/kingofpatal")],
+            [InlineKeyboardButton("💬 Contact Now", url="https://t.me/Doldotby")],
         ]
     )
     await callback_query.message.edit_text(terms_text, reply_markup=buttons)
- 
- 
