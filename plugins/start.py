@@ -13,7 +13,7 @@ async def subscribe(app, message):
         try:
             user = await app.get_chat_member(FORCE_SUB, message.from_user.id)
             if str(user.status) == "ChatMemberStatus.BANNED":
-                await message.reply_text("You are Banned. Contact -- Team SPY")
+                await message.reply_text("You are Banned. Contact -- Owner")
                 return 1
         except UserNotParticipant:
             link = await app.export_chat_invite_link(FORCE_SUB)
@@ -48,7 +48,8 @@ async def set(_, message):
         BotCommand("terms", "🥺 Terms and conditions"),
         BotCommand("help", "❓ If you're a noob, still!"),
         BotCommand("cancel", "🚫 Cancel login/batch/settings process"),
-        BotCommand("stop", "🚫 Cancel batch process")
+        BotCommand("stop", "🚫 Stop batch after ongoing task")
+        BotCommand("reboot", "🔁 Reboot bot")
     ])
 
     await message.reply("✅ Commands configured successfully!")
