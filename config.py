@@ -36,5 +36,5 @@ PREMIUM_LIMIT = int(os.getenv("PREMIUM_LIMIT", "500"))
 # New environment variables from main.py
 WAKE_ME_UP = os.getenv("WAKE_ME_UP", "false").lower() == "true" # set to true, for pinning wake me up url
 WAKE_ME_UP_URL = os.getenv("WAKE_ME_UP_URL", " ") # Get from Web service under services "https://immense-elsa-dhyty-aeff.koyeb.app/". 
-MAX_PIN_COUNT = int(os.getenv("MAX_PIN_COUNT", "2"))  # Fetch from env, default to 2 if not set
+MAX_PIN_COUNT = int(os.getenv("MAX_PIN_COUNT", "2"))  # wake up bot for 29 minutes if value set to 1 for bot deployed on koyeb.
 PORT = int(os.environ.get("PORT", 5000))  # default to 5000 if not set
