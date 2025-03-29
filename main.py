@@ -2,11 +2,10 @@
 # Licensed under the GNU General Public License v3.0.  
 # See LICENSE file in the repository root for full license text.
 
+import os
 import asyncio
 from shared_client import start_client
 import importlib
-import os
-import sys
 import aiohttp
 
 async def load_and_run_plugins():
@@ -29,20 +28,21 @@ async def fetch_random_fun_fact():
             else:
                 return "Could not fetch a fun fact at this time."
 
-async def send_random_message(bot_owner, count):
+async def send_random_message(bot_owner, count, interval):
     for _ in range(count):
         fun_fact = await fetch_random_fun_fact()
         # Replace the following line with actual code to send message via bot
         print(f"Sending fun fact to {bot_owner}: {fun_fact}")
-        await asyncio.sleep(29 * 60)  # Sleep for 29 minutes
+        await asyncio.sleep(interval * 60)  # Sleep for interval minutes
 
 async def wake_me_up_schedule():
     WAKE_ME_UP = os.getenv('WAKE_ME_UP', 'false').lower() == 'true'
     RANDOM_MESSAGE_COUNT = int(os.getenv('RANDOM_MESSAGE_COUNT', '3'))
     BOT_OWNER = os.getenv('BOT_OWNER', 'your_default_bot_owner_id')
+    MESSAGE_INTERVAL = int(os.getenv('MESSAGE_INTERVAL', '29'))  # Get interval from env
 
     if WAKE_ME_UP:
-        await send_random_message(BOT_OWNER, RANDOM_MESSAGE_COUNT)
+        await send_random_message(BOT_OWNER, RANDOM_MESSAGE_COUNT, MESSAGE_INTERVAL)
 
 async def main():
     await load_and_run_plugins()
