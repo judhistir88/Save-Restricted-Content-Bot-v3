@@ -1,5 +1,5 @@
-# Copyright (c) 2025 devgagan : https://github.com/devgaganin.  
-# Licensed under the GNU General Public License v3.0.  
+# Copyright (c) 2025 devgagan : https://github.com/devgaganin.
+# Licensed under the GNU General Public License v3.0.
 # See LICENSE file in the repository root for full license text.
 
 import os
@@ -34,7 +34,6 @@ FREEMIUM_LIMIT = int(os.getenv("FREEMIUM_LIMIT", "0"))
 PREMIUM_LIMIT = int(os.getenv("PREMIUM_LIMIT", "500"))
 
 # New environment variables from main.py
-WAKE_ME_UP = os.getenv("WAKE_ME_UP", "false").lower() == "true" # set to true, for pinning wake me up url
-WAKE_ME_UP_URL = os.getenv("WAKE_ME_UP_URL", " ") # Get from Web service under services "https://immense-elsa-dhyty-aeff.koyeb.app/". 
-MAX_PIN_COUNT = int(os.getenv("MAX_PIN_COUNT", "2"))  # wake up bot for 29 minutes if value set to 1 for bot deployed on koyeb.
-PORT = int(os.environ.get("PORT", 5000))  # default to 5000 if not set
+WAKE_ME_UP = os.getenv("WAKE_ME_UP", "false").lower() == "true" #set true if your bot become inactive after a time interval
+RANDOM_MESSAGE_COUNT = int(os.getenv("RANDOM_MESSAGE_COUNT", "3")) #increase value to keep alive bot in multiple of INTERVAL minutes
+BOT_OWNER = os.getenv("BOT_OWNER", "your_default_bot_owner_id") #owner id only, do not ada multiple admin ids
