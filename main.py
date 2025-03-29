@@ -7,6 +7,7 @@ from shared_client import start_client
 import importlib
 import os
 import sys
+import aiohttp
 
 async def load_and_run_plugins():
     await start_client()
@@ -17,12 +18,37 @@ async def load_and_run_plugins():
         module = importlib.import_module(f"plugins.{plugin}")
         if hasattr(module, f"run_{plugin}_plugin"):
             print(f"Running {plugin} plugin...")
-            await getattr(module, f"run_{plugin}_plugin")()  
+            await getattr(module, f"run_{plugin}_plugin")()
+
+async def fetch_random_fun_fact():
+    async with aiohttp.ClientSession() as session:
+        async with session.get('https://uselessfacts.jsph.pl/random.json?language=en') as response:
+            if response.status == 200:
+                data = await response.json()
+                return data['text']
+            else:
+                return "Could not fetch a fun fact at this time."
+
+async def send_random_message(bot_owner, count):
+    for _ in range(count):
+        fun_fact = await fetch_random_fun_fact()
+        # Replace the following line with actual code to send message via bot
+        print(f"Sending fun fact to {bot_owner}: {fun_fact}")
+        await asyncio.sleep(29 * 60)  # Sleep for 29 minutes
+
+async def wake_me_up_schedule():
+    WAKE_ME_UP = os.getenv('WAKE_ME_UP', 'false').lower() == 'true'
+    RANDOM_MESSAGE_COUNT = int(os.getenv('RANDOM_MESSAGE_COUNT', '3'))
+    BOT_OWNER = os.getenv('BOT_OWNER', 'your_default_bot_owner_id')
+
+    if WAKE_ME_UP:
+        await send_random_message(BOT_OWNER, RANDOM_MESSAGE_COUNT)
 
 async def main():
     await load_and_run_plugins()
+    await wake_me_up_schedule()
     while True:
-        await asyncio.sleep(1)  
+        await asyncio.sleep(1)  # Keep the bot running
 
 if __name__ == "__main__":
     loop = asyncio.get_event_loop()
