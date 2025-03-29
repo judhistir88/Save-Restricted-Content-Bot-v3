@@ -20,7 +20,7 @@ YTUB_COOKIES = """
 API_ID = os.getenv("API_ID", "")
 API_HASH = os.getenv("API_HASH", "")
 BOT_TOKEN = os.getenv("BOT_TOKEN", "")
-MONGO_URI = os.getenv("MONGO_DB", "")
+MONGO_DB = os.getenv("MONGO_DB", "")
 OWNER_ID = list(map(int, os.getenv("OWNER_ID", "").split()))  # list separated via space
 DB_NAME = os.getenv("DB_NAME", "telegram_downloader")
 STRING = os.getenv("STRING", None)  # optional
@@ -34,6 +34,7 @@ FREEMIUM_LIMIT = int(os.getenv("FREEMIUM_LIMIT", "0"))
 PREMIUM_LIMIT = int(os.getenv("PREMIUM_LIMIT", "500"))
 
 # New environment variables from main.py
-WAKE_ME_UP = os.getenv("WAKE_ME_UP", "false").lower() == "true"
-WAKE_ME_UP_URL = os.getenv("WAKE_ME_UP_URL", "")
-PORT = int(os.environ.get("PORT", 5000)) # default to 5000 if not set
+WAKE_ME_UP = os.getenv("WAKE_ME_UP", "false").lower() == "true" # set to true, for pinning wake me up url
+WAKE_ME_UP_URL = os.getenv("WAKE_ME_UP_URL", " ") # Get from Web service under services "https://immense-elsa-dhyty-aeff.koyeb.app/". 
+MAX_PIN_COUNT = int(os.getenv("MAX_PIN_COUNT", "2"))  # Fetch from env, default to 2 if not set
+PORT = int(os.environ.get("PORT", 5000))  # default to 5000 if not set
