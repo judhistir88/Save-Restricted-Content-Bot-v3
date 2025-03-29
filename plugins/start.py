@@ -48,7 +48,7 @@ async def set(_, message):
         BotCommand("terms", "🥺 Terms and conditions"),
         BotCommand("help", "❓ If you're a noob, still!"),
         BotCommand("cancel", "🚫 Cancel login/batch/settings process"),
-        BotCommand("stop", "🚫 Stop batch after ongoing task")
+        BotCommand("stop", "🚫 Stop batch after ongoing task"),
         BotCommand("reboot", "🔁 Reboot bot")
     ])
 
