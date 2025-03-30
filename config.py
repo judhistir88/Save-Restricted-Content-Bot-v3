@@ -34,6 +34,7 @@ FREEMIUM_LIMIT = int(os.getenv("FREEMIUM_LIMIT", "0"))
 PREMIUM_LIMIT = int(os.getenv("PREMIUM_LIMIT", "500"))
 
 # New environment variables from main.py
-WAKE_ME_UP = os.getenv("WAKE_ME_UP", "false").lower() == "true" #set true if your bot become inactive after a time interval
-RANDOM_MESSAGE_COUNT = int(os.getenv("RANDOM_MESSAGE_COUNT", "3")) #increase value to keep alive bot in multiple of INTERVAL minutes
-BOT_OWNER = os.getenv("BOT_OWNER", "your_default_bot_owner_id") #owner id only, do not ada multiple admin ids
+WAKE_ME_UP = os.getenv("WAKE_ME_UP", "false").lower() == "true" # set true if your bot becomes inactive after a time interval
+MESSAGE_INTERVAL = int(os.getenv("MESSAGE_INTERVAL", "29"))  # default to 29 minutes if not set
+RANDOM_MESSAGE_COUNT = int(os.getenv("RANDOM_MESSAGE_COUNT", "3")) # increase value to keep alive bot in multiple of MESSAGE_INTERVAL minutes
+BOT_OWNER = os.getenv("BOT_OWNER", "your_default_bot_owner_id") # owner id only, do not add multiple admin ids
